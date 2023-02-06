@@ -11,6 +11,4 @@ public abstract class Room {
     public void switchOnLight(){
         System.out.println("The light was switched on.");
     }
-
-
 }
