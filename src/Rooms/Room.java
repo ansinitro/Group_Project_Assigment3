@@ -5,6 +5,12 @@ public abstract class Room {
     private double height;
     private int numberOfSockets;
 
+   public Room (double square, double height, int numberOfSockets){
+       this.square = square;
+       this.height = height;
+       this.numberOfSockets = numberOfSockets;
+   }
+
     public void switchOffLight(){
         System.out.println("The light was switched off.");
     }
