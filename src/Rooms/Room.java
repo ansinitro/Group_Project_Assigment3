@@ -4,6 +4,7 @@ public abstract class Room {
     private double square;
     private double height;
     private int numberOfSockets;
+    private int numberOfLights;
 
    public Room (double square, double height, int numberOfSockets){
        this.square = square;
@@ -41,5 +42,13 @@ public abstract class Room {
 
     public double getSquare() {
         return square;
+    }
+
+    public void setNumberOfLights(int numberOfLights) {
+        this.numberOfLights = numberOfLights;
+    }
+
+    public int getNumberOfLights() {
+        return numberOfLights;
     }
 }
