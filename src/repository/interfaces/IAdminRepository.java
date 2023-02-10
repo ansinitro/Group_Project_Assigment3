@@ -1,11 +1,11 @@
 package repository.interfaces;
 
-import repository.Person;
+import enteties.Member;
 
 import java.util.List;
 
 public interface IAdminRepository {
-    boolean createPerson(Person person);
-    Person getMemberInfo(String iin);
-    List<Person> getAllList();
+    boolean createMember(Member person);
+    Member getMemberInfo(String iin);
+    List<Member> getAllMembers();
 }

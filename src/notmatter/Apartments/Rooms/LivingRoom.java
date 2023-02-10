@@ -1,4 +1,4 @@
-package Rooms;
+package notmatter.Apartments.Rooms;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

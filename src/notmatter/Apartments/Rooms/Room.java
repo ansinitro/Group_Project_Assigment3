@@ -1,10 +1,4 @@
-package Rooms;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.*;
+package notmatter.Apartments.Rooms;
 
 public abstract class Room {
     private double square;

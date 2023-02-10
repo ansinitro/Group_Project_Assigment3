@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import data.interfaces.IDB;
+import enteties.Member;
 import repository.interfaces.IAdminRepository;
 
 public class AdminRepository implements IAdminRepository {
@@ -15,7 +16,7 @@ public class AdminRepository implements IAdminRepository {
     }
 
     @Override
-    public boolean createPerson(Person person) {
+    public boolean createMember(Member person) {
         Connection con = null;
         try{
             con = db.getConnection();
@@ -55,29 +56,30 @@ public class AdminRepository implements IAdminRepository {
     }
 
     @Override
-    public Person getMemberInfo(String iin) {
+    public Member getMemberInfo(String iin) {
         Connection con = null;
         try {
             con = db.getConnection();
-            PreparedStatement stmt = con.prepareStatement("SELECT id, name, surname, phone_number, iin FROM users WHERE iin = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT id, name, surname, phone_number, iin FROM members WHERE iin = ?");
             stmt.setString(1, iin);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Person person;
-                if (rs.getString("phone_number").equals("")) {
-                    person = new Person(rs.getString("name"),
+                Member member;
+                if (rs.getString("phone_number") == null) {
+                    member = new Member(rs.getString("name"),
                             rs.getString("surname"),
                             rs.getString("iin"));
 
+                    return member;
                 }
                 else {
-                    person = new Person(rs.getString("name"),
+                    member = new Member(rs.getString("name"),
                             rs.getString("surname"),
                             rs.getString("phone_number"),
                             rs.getString("iin"));
 
-                } return person;
+                } return member;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -94,16 +96,16 @@ public class AdminRepository implements IAdminRepository {
     }
 
     @Override
-    public List<Person> getAllList() {
+    public List<Member> getAllMembers() {
         Connection con = null;
         try {
             con = db.getConnection();
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery("SELECT iin, name, surname, phone_number FROM members");
-            List<Person> members = new LinkedList<>();
+            List<Member> members = new LinkedList<>();
             while (rs.next()) {
-                Person person = new Person(rs.getString("name"),
+                Member person = new Member(rs.getString("name"),
                         rs.getString("surname"),
                         rs.getString("phone_number"),
                         rs.getString("iin"));

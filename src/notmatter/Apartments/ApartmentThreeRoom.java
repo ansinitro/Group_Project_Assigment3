@@ -1,11 +1,9 @@
-package Apartments;
+package notmatter.Apartments;
 
-import Rooms.Bathroom;
-import Rooms.Kitchen;
-import Rooms.LivingRoom;
-import Rooms.Toilet;
-
-import javax.swing.text.LabelView;
+import notmatter.Apartments.Rooms.Bathroom;
+import notmatter.Apartments.Rooms.Kitchen;
+import notmatter.Apartments.Rooms.LivingRoom;
+import notmatter.Apartments.Rooms.Toilet;
 
 public class ApartmentThreeRoom {
     ApartmentThreeRoom(){

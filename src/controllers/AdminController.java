@@ -1,6 +1,6 @@
 package controllers;
 
-import repository.Person;
+import enteties.Member;
 import repository.interfaces.IAdminRepository;
 
 import java.util.List;
@@ -12,23 +12,21 @@ public class AdminController {
         this.repository = repository;
     }
 
-    public String createMemeber(String name, String surname, String phone_number, String iin){
-        Person person = new Person(name, surname, phone_number, iin);
-        boolean created = repository.createPerson(person);
+    public String createMember(String name, String surname, String phone_number, String iin){
+        Member person = new Member(name, surname, phone_number, iin);
+        boolean created = repository.createMember(person);
 
         return (created ? "Member was created" : "Member creation wa failed");
     }
 
     public String getMemberInfo(String iin){
-        Person member = repository.getMemberInfo(iin);
+        Member member = repository.getMemberInfo(iin);
 
         return(member == null ? "Member not found" : member.toString());
     }
 
-    public List<Person> getAllMembers() {
-        List<Person> members = repository.getAllList();
-        for (Person p : members) {
-            p.toString();
-        }
+    public List<Member> getAllMembers() {
+        List<Member> members = repository.getAllMembers();
+        return members;
     }
 }

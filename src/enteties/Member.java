@@ -1,17 +1,17 @@
-package repository;
+package enteties;
 
-public class Person {
+public class Member {
     private String name;
     private String surname;
     private String phone_number = "no number";
     private String iin;
 
-    public Person(String name, String surname, String iin){
+    public Member(String name, String surname, String iin){
         this.name = name;
         this.surname = surname;
         this.iin = iin;
     }
-    public Person(String name, String surname, String phone_number, String iin){
+    public Member(String name, String surname, String phone_number, String iin){
         this(name, surname, iin);
         this.phone_number = phone_number;
     }
@@ -34,6 +34,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return (surname + ' ' + name + ' ' + phone_number + ' ' + iin);
+        String s = "Surname: " + surname + "\nName: " + name + "\nPhone number: " + phone_number + "\nIIN:" + iin;
+        return s;
     }
 }
