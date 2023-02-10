@@ -41,6 +41,6 @@ public class LivingRoom extends Room {
         catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        }
     }
 }
+
