@@ -118,5 +118,10 @@ public class AdminRepository implements IAdminRepository {
         }
         return null;
     }
+
+    @Override
+    public boolean changePassword(String password) {
+        return false;
+    }
 }
 

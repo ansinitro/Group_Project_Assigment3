@@ -3,7 +3,7 @@ package enteties;
 public class Member {
     private String name;
     private String surname;
-    private String phone_number = "no number";
+    private String phone_number;
     private String iin;
 
     public Member(String name, String surname, String iin){
