@@ -65,21 +65,12 @@ public class AdminRepository implements IAdminRepository {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Member member;
-                if (rs.getString("phone_number") == null) {
-                    member = new Member(rs.getString("name"),
+                Member member = member = new Member(rs.getString("name"),
                             rs.getString("surname"),
+                        (rs.getString("phone_number") == null ? "no number" : rs.getString("phone_number")),
                             rs.getString("iin"));
 
                     return member;
-                }
-                else {
-                    member = new Member(rs.getString("name"),
-                            rs.getString("surname"),
-                            rs.getString("phone_number"),
-                            rs.getString("iin"));
-
-                } return member;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
