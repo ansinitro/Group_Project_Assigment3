@@ -12,11 +12,11 @@ public class AdminController {
         this.repository = repository;
     }
 
-    public String createMember(String name, String surname, String phone_number, String iin){
-        Member person = new Member(name, surname, phone_number, iin);
-        boolean created = repository.createMember(person);
+    public boolean settlement(String name, String surname, String phone_number, String iin, int apartment, int room){
+        Member member = new Member(name, surname, phone_number, iin, apartment, room);
+        boolean created = repository.settlement(member);
 
-        return (created ? "Member was created" : "Member creation wa failed");
+        return created;
     }
 
     public String getMemberInfo(String iin){

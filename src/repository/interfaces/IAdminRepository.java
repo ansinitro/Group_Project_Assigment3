@@ -5,8 +5,8 @@ import enteties.Member;
 import java.util.List;
 
 public interface IAdminRepository {
-    boolean createMember(Member person);
     Member getMemberInfo(String iin);
     List<Member> getAllMembers();
-    boolean changePassword(String password);
+    boolean settlement(Member member);
+    boolean eviction_by_iin(String iin);
 }

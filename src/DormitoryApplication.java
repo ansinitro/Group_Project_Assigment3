@@ -76,7 +76,7 @@ public class DormitoryApplication {
                 } else if (option == 2) {
                     getUserByIinMenu();
                 } else if (option == 3) {
-                    createUserMenu();
+                    settlementMenu();
                 } else {
                     break;
                 }
@@ -107,7 +107,7 @@ public class DormitoryApplication {
                 System.out.print("Enter option (1-3): ");
                 int option = scanner.nextInt();
                 if (option == 1) {
-                    System.out.println("Shaumen Angsar");;
+                    System.out.println("Shaumen Angsar");
                 } else if (option == 2) {
                     System.out.println("+7 (707) 883 9600");
                 } else if (option == 3) {
@@ -144,20 +144,25 @@ public class DormitoryApplication {
         System.out.println(response);
     }
 
-    public void createUserMenu() {
+    public void settlementMenu() {
         System.out.println("Please enter name");
         String name = scanner.next().trim();
         System.out.println("Please enter surname");
         String surname = scanner.next().trim();
-        System.out.println("Please enter phone number like \"+7**********\" (otherwise enter 0)");
+        System.out.println("Please enter phone number like \"+7**********\"");
         String phone_number = scanner.next().trim();
-        if (phone_number == "0")
-            phone_number = null;
         System.out.println("Please enter iin");
         String iin = scanner.next().trim();
+        System.out.println("Please enter apartment number");
+        int apartment = Integer.parseInt(scanner.next().trim());
+        System.out.println("Please enter room number");
+        int room = Integer.parseInt(scanner.next().trim());
 
-        String response = controller.createMember(name, surname, phone_number, iin);
-        System.out.println(response);
+        boolean response = controller.settlement(name, surname, phone_number, iin, apartment, room);
+        if(response)
+            System.out.println("Person was added");
+        else
+            System.err.println("Something went wrong!!!");
     }
 }
 

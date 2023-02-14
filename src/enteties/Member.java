@@ -5,15 +5,16 @@ public class Member {
     private String surname;
     private String phone_number;
     private String iin;
+    private int apartment;
+    private int room;
 
-    public Member(String name, String surname, String iin){
+    public Member(String name, String surname, String phone_number, String iin, int apartment, int room){
         this.name = name;
         this.surname = surname;
-        this.iin = iin;
-    }
-    public Member(String name, String surname, String phone_number, String iin){
-        this(name, surname, iin);
         this.phone_number = phone_number;
+        this.iin = iin;
+        this.apartment = apartment;
+        this.room = room;
     }
 
     public String getName() {
@@ -30,6 +31,14 @@ public class Member {
 
     public String getSurname() {
         return surname;
+    }
+
+    public int getApartment() {
+        return apartment;
+    }
+
+    public int getRoom() {
+        return room;
     }
 
     @Override
