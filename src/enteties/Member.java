@@ -8,11 +8,15 @@ public class Member {
     private int apartment;
     private int room;
 
-    public Member(String name, String surname, String phone_number, String iin, int apartment, int room){
+    public Member(String name, String surname, String phone_number, String iin){
         this.name = name;
         this.surname = surname;
         this.phone_number = phone_number;
         this.iin = iin;
+    }
+
+    public Member(String name, String surname, String phone_number, String iin, int apartment, int room){
+        this(name, surname, phone_number, iin);
         this.apartment = apartment;
         this.room = room;
     }
@@ -43,7 +47,8 @@ public class Member {
 
     @Override
     public String toString() {
-        String s = "Surname: " + surname + "\nName: " + name + "\nPhone number: " + phone_number + "\nIIN:" + iin;
-        return s;
+        return "Apartment: " + apartment + "\nroom: " + room +
+                "\nSurname: " + surname + "\nName: " + name +
+                "\nPhone number: " + phone_number + "\nIIN: " + iin;
     }
 }

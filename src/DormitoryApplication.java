@@ -1,17 +1,22 @@
 
 import controllers.AdminController;
+import controllers.DormitoryController;
+import enteties.Apartment;
 import enteties.Member;
+import enteties.Room;
 
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class DormitoryApplication {
-    private final AdminController controller;
+    private final AdminController adminController;
+    private final DormitoryController dormitoryController;
     private final Scanner scanner;
 
-    public DormitoryApplication(AdminController controller) {
-        this.controller = controller;
+    public DormitoryApplication(AdminController adminController, DormitoryController dormitoryController) {
+        this.adminController = adminController;
+        this.dormitoryController = dormitoryController;
         scanner = new Scanner(System.in);
     }
 
@@ -63,21 +68,24 @@ public class DormitoryApplication {
             System.out.println();
             System.out.println("Welcome Admin");
             System.out.println("Select option:");
-            System.out.println("1. Get all users");
-            System.out.println("2. Get user by iin");
-            System.out.println("3. Create user");
+            System.out.println("1. Get all members");
+            System.out.println("2. Get member by iin");
+            System.out.println("3. Settlement Person");
+            System.out.println("4. Eviction Person by iin");
             System.out.println("0. Exit");
             System.out.println();
             try {
                 System.out.print("Enter option (1-3): ");
                 int option = scanner.nextInt();
                 if (option == 1) {
-                    getAllUsersMenu();
+                    getAllMembersMenu();
                 } else if (option == 2) {
                     getUserByIinMenu();
                 } else if (option == 3) {
                     settlementMenu();
-                } else {
+                } else if (option == 4){
+                    evictionMenu();
+                }else {
                     break;
                 }
             } catch (InputMismatchException e) {
@@ -111,7 +119,7 @@ public class DormitoryApplication {
                 } else if (option == 2) {
                     System.out.println("+7 (707) 883 9600");
                 } else if (option == 3) {
-                    System.out.println("Open: 6:00 - 23:00\nClose: 23:00 - 6:00");
+                    System.out.println(dormitoryController.getInformationAboutDormitory());
                 } else {
                     break;
                 }
@@ -128,10 +136,10 @@ public class DormitoryApplication {
         }
     }
 
-    public void getAllUsersMenu() {
-        List<Member> response = controller.getAllMembers();
-        for(Member p : response){
-            System.out.println(p);
+    public void getAllMembersMenu() {
+        List<Member> response = adminController.getAllMembers();
+        for(Member m : response){
+            System.out.println(m);
             System.out.println();
         }
     }
@@ -140,7 +148,7 @@ public class DormitoryApplication {
         System.out.println("Please enter iin");
 
         String iin = scanner.next();
-        String response = controller.getMemberInfo(iin);
+        String response = adminController.getMemberInfo(iin);
         System.out.println(response);
     }
 
@@ -153,16 +161,28 @@ public class DormitoryApplication {
         String phone_number = scanner.next().trim();
         System.out.println("Please enter iin");
         String iin = scanner.next().trim();
+
+        System.out.println("Choose free apartment:");
+        for(Apartment a : dormitoryController.getFreeApartments())
+            System.out.println(a);
         System.out.println("Please enter apartment number");
         int apartment = Integer.parseInt(scanner.next().trim());
+        System.out.println("Choose free room:");
+        for (Room r : dormitoryController.getFreeRooms(apartment))
+            System.out.println(r);
         System.out.println("Please enter room number");
         int room = Integer.parseInt(scanner.next().trim());
 
-        boolean response = controller.settlement(name, surname, phone_number, iin, apartment, room);
+        boolean response = adminController.settlement(name, surname, phone_number, iin, apartment, room);
         if(response)
             System.out.println("Person was added");
         else
             System.err.println("Something went wrong!!!");
     }
+
+    public void evictionMenu(){
+
+    }
+
 }
 

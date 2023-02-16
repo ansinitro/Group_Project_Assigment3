@@ -12,13 +12,6 @@ public class AdminController {
         this.repository = repository;
     }
 
-    public boolean settlement(String name, String surname, String phone_number, String iin, int apartment, int room){
-        Member member = new Member(name, surname, phone_number, iin, apartment, room);
-        boolean created = repository.settlement(member);
-
-        return created;
-    }
-
     public String getMemberInfo(String iin){
         Member member = repository.getMemberInfo(iin);
 
@@ -26,7 +19,15 @@ public class AdminController {
     }
 
     public List<Member> getAllMembers() {
-        List<Member> members = repository.getAllMembers();
-        return members;
+        return repository.getAllMembers();
+    }
+
+    public boolean settlement(String name, String surname, String phone_number, String iin, int apartment, int room){
+        Member member = new Member(name, surname, phone_number, iin, apartment, room);
+        return repository.settlement(member);
+    }
+
+    public boolean eviction_by_iin(){
+        return true;
     }
 }
