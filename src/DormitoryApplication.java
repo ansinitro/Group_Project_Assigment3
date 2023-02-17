@@ -108,7 +108,7 @@ public class DormitoryApplication {
             System.out.println("Select option:");
             System.out.println("1. Admin name and surname");
             System.out.println("2. Admin phone number");
-            System.out.println("3. Graphic of Dormitory");
+            System.out.println("3. Information about Dormitory");
             System.out.println("0. Exit");
             System.out.println();
             try {
@@ -162,7 +162,7 @@ public class DormitoryApplication {
         while (true) {
             phone_number = scanner.next().trim();
             if(phone_number.length() != 12)
-                System.out.println("Phone number must consist 12 character");
+                System.err.println("Phone number must consist 12 character");
             else
                 break;
         }
@@ -170,7 +170,7 @@ public class DormitoryApplication {
         while(true){
             iin = scanner.next().trim();
             if(iin.length() != 12)
-                System.out.println("IIN must consist 12 character");
+                System.err.println("IIN must consist 12 character");
             else
                 break;
         }
@@ -194,8 +194,19 @@ public class DormitoryApplication {
     }
 
     public void evictionMenu(){
-
+        String iin;
+        System.out.println("Input IIN of member: ");
+        while(true){
+            iin = scanner.next().trim();
+            if(iin.length() != 12)
+                System.err.println("IIN must consist 12 character");
+            else
+                break;
+        }
+        if(adminController.eviction_by_iin(iin))
+            System.out.println("Person evicted");
+        else
+            System.err.println("Something went wrong!!!");
     }
-
 }
 
