@@ -27,7 +27,7 @@ public class AdminController {
         return repository.settlement(member);
     }
 
-    public boolean eviction_by_iin(){
-        return true;
+    public boolean eviction_by_iin(String iin){
+        return repository.eviction_by_iin(iin);
     }
 }

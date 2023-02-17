@@ -93,16 +93,24 @@ public class AdminRepository implements IAdminRepository {
     public boolean settlement(Member member) {
         Connection con = null;
         try{
+            // check is the room is free or not
             con = db.getConnection();
             String sqlcheck = "select occupancy from room where fk_apartment = ? and room_number = ?";
             PreparedStatement stmt = con.prepareStatement(sqlcheck);
             stmt.setInt(1, member.getApartment());
             stmt.setInt(2, member.getRoom());
             ResultSet rs = stmt.executeQuery();
-            if(rs.getBoolean("occupancy"))
-                return false;
 
-            String sql = "INSERT INTO member(name, surname, phone_number, iin) VALUES (?,?,?,?,?,?)";
+            if(!rs.next())
+                return false;
+            while(rs.next()) {
+                if (rs.getBoolean("occupancy"))
+                    return false;
+
+            }
+            // add the member into the member table in db
+            String sql = "INSERT INTO member(name, surname, phone_number, pk_iin, apartment, room) VALUES (" + member.getName()
+                    + "," + member.getSurname() + "," + member.ge;
             stmt = con.prepareStatement(sql);
             stmt.setString(1, member.getName());
             stmt.setString(2, member.getSurname());
@@ -110,37 +118,47 @@ public class AdminRepository implements IAdminRepository {
             stmt.setString(4, member.getIin());
             stmt.setInt(5, member.getApartment());
             stmt.setInt(6, member.getRoom());
-            stmt.execute();
-
-            sql = "SELECT COUNT(*) FROM member WHERE apartment = ? AND room_number = ?";
+            stmt.executeUpdate();
+            // check how many member in the room
+            sql = "SELECT COUNT(*) FROM member WHERE apartment = ? AND room = ?";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, member.getApartment());
             stmt.setInt(2, member.getRoom());
-
-            int count = stmt.executeQuery().getInt("count");
-
+            rs = stmt.executeQuery();
+            int count = 0;
+            while(rs.next())
+                 count = rs.getInt("count");
+            // check capacity of the room
             sql = "SELECT capacity FROM room WHERE fk_apartment = ? AND room_number = ?";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, member.getApartment());
             stmt.setInt(2, member.getRoom());
-
-            int capacity = stmt.executeQuery().getInt("capacity");
-
+            rs = stmt.executeQuery();
+            int capacity = 0;
+            while(rs.next())
+                capacity = rs.getInt("capacity");
+            // compare member number and capacity of the room
             if(count == capacity){
+                // change the occupancy
                 sql = "UPDATE room SET occupancy = true WHERE fk_apartment = ? AND room_number = ?;";
                 stmt = con.prepareStatement(sql);
                 stmt.setInt(1, member.getApartment());
                 stmt.setInt(2, member.getRoom());
-                stmt.executeQuery();
-
+                stmt.executeUpdate();
+                // check the occupancy of rooms in the apartment
                 sql = "select count(distinct occupancy) from room where fk_apartment = ?";
                 stmt = con.prepareStatement(sql);
                 stmt.setInt(1, member.getApartment());
-                if (stmt.executeQuery().getInt("count") == capacity){
+                rs = stmt.executeQuery();
+                while(rs.next()) {
+                    count = rs.getInt("count");
+                }
+                // if all rooms occupancy equal to true apartment occupancy equal to true
+                if (count == 1){
                     sql = "UPDATE apartment SET occupancy = true WHERE apartment_number = ?";
                     stmt = con.prepareStatement(sql);
                     stmt.setInt(1, member.getApartment());
-                    stmt.execute();
+                    stmt.executeUpdate();
                 }
             }
 
@@ -163,14 +181,37 @@ public class AdminRepository implements IAdminRepository {
     public boolean eviction_by_iin(String iin) {
         Connection con = null;
         try{
-            con = db.getConnection();
+            Connection con = db.getConnection();
             String sql = "DELETE FROM member WHERE iin = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1,iin);
 
             stmt.execute();
 
-            return true;
+
+
+
+
+            // check the occupancy of rooms in the apartment
+            sql = "update room set occupancy = false where ";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, member.getApartment());
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                count = rs.getInt("count");
+            }
+            // if all rooms occupancy equal to true apartment occupancy equal to true
+            if (count == 1){
+                sql = "UPDATE apartment SET occupancy = true WHERE apartment_number = ?";
+                stmt = con.prepareStatement(sql);
+                stmt.setInt(1, member.getApartment());
+                stmt.executeUpdate();
+
+
+
+
+
+                return true;
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -183,6 +224,10 @@ public class AdminRepository implements IAdminRepository {
             }
         }
         return false;
+    } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 

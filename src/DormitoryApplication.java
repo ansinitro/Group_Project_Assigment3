@@ -75,7 +75,7 @@ public class DormitoryApplication {
             System.out.println("0. Exit");
             System.out.println();
             try {
-                System.out.print("Enter option (1-3): ");
+                System.out.print("Enter option (1-4): ");
                 int option = scanner.nextInt();
                 if (option == 1) {
                     getAllMembersMenu();
@@ -153,14 +153,27 @@ public class DormitoryApplication {
     }
 
     public void settlementMenu() {
+        String name, surname, phone_number, iin;
         System.out.println("Please enter name");
-        String name = scanner.next().trim();
+        name = scanner.next().trim();
         System.out.println("Please enter surname");
-        String surname = scanner.next().trim();
+        surname = scanner.next().trim();
         System.out.println("Please enter phone number like \"+7**********\"");
-        String phone_number = scanner.next().trim();
+        while (true) {
+            phone_number = scanner.next().trim();
+            if(phone_number.length() != 12)
+                System.out.println("Phone number must consist 12 character");
+            else
+                break;
+        }
         System.out.println("Please enter iin");
-        String iin = scanner.next().trim();
+        while(true){
+            iin = scanner.next().trim();
+            if(iin.length() != 12)
+                System.out.println("IIN must consist 12 character");
+            else
+                break;
+        }
 
         System.out.println("Choose free apartment:");
         for(Apartment a : dormitoryController.getFreeApartments())

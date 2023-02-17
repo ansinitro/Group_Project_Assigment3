@@ -29,11 +29,9 @@ public class DormitoryRepository implements IDormitoryRepository {
             List<Apartment> list_of_free_apartments = new LinkedList<Apartment>();
 
             while(rs.next()) {
-                if (rs.getBoolean("occupancy")) {
                     Apartment apartment = new Apartment(rs.getInt("apartment_number"),
                             rs.getInt("number_of_rooms"));
                     list_of_free_apartments.add(apartment);
-                }
             }
 
             return list_of_free_apartments;
@@ -55,18 +53,17 @@ public class DormitoryRepository implements IDormitoryRepository {
         Connection con = null;
         try {
             con = db.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "SELECT room_number, capacity FROM room WHERE occupancy = false" +
+            String sql = "SELECT distinct(room_number), capacity FROM room WHERE occupancy = false and fk_apartment = ?" +
                     " ORDER BY room_number";
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, apartment);
+            ResultSet rs = stmt.executeQuery();
             List<Room> list_of_free_rooms = new LinkedList<Room>();
 
             while(rs.next()) {
-                if (rs.getBoolean("occupancy")) {
                     Room room = new Room(rs.getInt("room_number"),
                             rs.getInt("capacity"));
                     list_of_free_rooms.add(room);
-                }
             }
 
             return list_of_free_rooms;
