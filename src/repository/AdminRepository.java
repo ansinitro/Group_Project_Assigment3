@@ -17,22 +17,20 @@ public class AdminRepository implements IAdminRepository {
         this.db = db;
     }
 
-
     @Override
     public Member getMemberInfo(String iin) {
         Connection con = null;
         try {
             con = db.getConnection();
-            String sql = "SELECT id, name, surname, phone_number, pk_iin, apartment, room FROM member WHERE iin = ?";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, iin);
+            String sql = "SELECT name, surname, phone_number, pk_iin, apartment, room FROM member WHERE pk_iin = '"+ iin + "'";
+            Statement stmt = con.createStatement();
 
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 Member member = new Member(rs.getString("name"),
                             rs.getString("surname"),
                         rs.getString("phone_number"),
-                            rs.getString("iin"),
+                            rs.getString("pk_iin"),
                         rs.getInt("apartment"),
                         rs.getInt("room"));
 
