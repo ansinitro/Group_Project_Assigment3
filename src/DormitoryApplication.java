@@ -30,23 +30,29 @@ public class DormitoryApplication {
             try {
                 System.out.print("Enter option (1-2): ");
                 int option = scanner.nextInt();
-                if (option == 1) {
-                    while (true) {
-                        System.out.println("Enter a password (for exit enter 0)");
-                        String password = scanner.next();
-                        if (password.equals("0"))
-                            break;
-                        if (password.equals("7777")) {
-                            admin();
-                            break;
-                        } else
-                            System.out.println("Try again\n");
-                    }
-                } else if (option == 2) {
-                    member();
-                } else {
+                if(option == 0)
                     break;
-                }
+                switch (option) {
+                    case 1:
+                        while (true) {
+                            System.out.println("Enter a password (for exit enter 0)");
+                            String password = scanner.next();
+                            if (password.equals("0"))
+                                break;
+                            if (password.equals("7777")) {
+                                admin();
+                                break;
+                            } else
+                                System.out.println("Try again\n");
+                            }
+                        break;
+                    case 2:
+                        member();
+                        break;
+                    default:
+                        break;
+
+            }
 
             } catch (InputMismatchException e) {
                 System.out.println("Input must be integer");
@@ -77,16 +83,23 @@ public class DormitoryApplication {
             try {
                 System.out.print("Enter option (1-4): ");
                 int option = scanner.nextInt();
-                if (option == 1) {
-                    getAllMembersMenu();
-                } else if (option == 2) {
-                    getUserByIinMenu();
-                } else if (option == 3) {
-                    settlementMenu();
-                } else if (option == 4){
-                    evictionMenu();
-                }else {
+                if(option == 0)
                     break;
+                switch (option) {
+                    case 1:
+                        getAllMembersMenu();
+                        break;
+                    case 2:
+                        getUserByIinMenu();
+                        break;
+                    case 3:
+                        settlementMenu();
+                        break;
+                    case 4:
+                        evictionMenu();
+                        break;
+                    default:
+                        break;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Input must be integer");
@@ -95,9 +108,7 @@ public class DormitoryApplication {
             catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-
             System.out.println("*************************");
-
         }
     }
 
@@ -106,23 +117,24 @@ public class DormitoryApplication {
             System.out.println();
             System.out.println("Welcome to Dormitory");
             System.out.println("Select option:");
-            System.out.println("1. Admin name and surname");
-            System.out.println("2. Admin phone number");
-            System.out.println("3. Information about Dormitory");
+            System.out.println("1. Information about Admin ");
+            System.out.println("2. Information about Dormitory");
             System.out.println("0. Exit");
             System.out.println();
             try {
                 System.out.print("Enter option (1-3): ");
                 int option = scanner.nextInt();
-                if (option == 1) {
-                    System.out.println("Shaumen Angsar");
-                } else if (option == 2) {
-                    System.out.println("+7 (707) 883 9600");
-                } else if (option == 3) {
-                    System.out.println(dormitoryController.getInformationAboutDormitory());
-                } else {
+                if(option == 0)
                     break;
-                }
+                switch (option) {
+                    case 1:
+                        System.out.println("Name: Angsar\nSurname: Shaumen\nPhone number: +77078839600");
+                        break;
+                    case 2:
+                        System.out.println(dormitoryController.getInformationAboutDormitory());
+                    default:
+                        break;
+                    }
             } catch (InputMismatchException e) {
                 System.out.println("Input must be integer");
                 scanner.nextLine(); // to ignore incorrect input
@@ -149,16 +161,19 @@ public class DormitoryApplication {
 
         String iin = scanner.next();
         String response = adminController.getMemberInfo(iin);
-        System.out.println(response);
+        if(response.equals("Member not found"))
+            System.err.println(response);
+        else
+            System.out.println(response);
     }
 
     public void settlementMenu() {
         String name, surname, phone_number, iin;
-        System.out.println("Please enter name");
+        System.out.println("Please enter name:");
         name = scanner.next().trim();
-        System.out.println("Please enter surname");
+        System.out.println("Please enter surname:");
         surname = scanner.next().trim();
-        System.out.println("Please enter phone number like \"+7**********\"");
+        System.out.println("Please enter phone number like \"+7**********\":");
         while (true) {
             phone_number = scanner.next().trim();
             if(phone_number.length() != 12)
@@ -166,7 +181,7 @@ public class DormitoryApplication {
             else
                 break;
         }
-        System.out.println("Please enter iin");
+        System.out.println("Please enter iin:");
         while(true){
             iin = scanner.next().trim();
             if(iin.length() != 12)
@@ -175,15 +190,15 @@ public class DormitoryApplication {
                 break;
         }
 
-        System.out.println("Choose free apartment:");
+        System.out.println("Choose free apartment");
         for(Apartment a : dormitoryController.getFreeApartments())
             System.out.println(a);
-        System.out.println("Please enter apartment number");
+        System.out.println("Please enter apartment number:");
         int apartment = Integer.parseInt(scanner.next().trim());
-        System.out.println("Choose free room:");
+        System.out.println("Choose free room");
         for (Room r : dormitoryController.getFreeRooms(apartment))
             System.out.println(r);
-        System.out.println("Please enter room number");
+        System.out.println("Please enter room number:");
         int room = Integer.parseInt(scanner.next().trim());
 
         boolean response = adminController.settlement(name, surname, phone_number, iin, apartment, room);

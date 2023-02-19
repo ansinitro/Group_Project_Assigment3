@@ -37,9 +37,9 @@ public class AdminRepository implements IAdminRepository {
                     return member;
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return null;
         } finally {
             try {
                 con.close();
@@ -74,9 +74,9 @@ public class AdminRepository implements IAdminRepository {
 
             return members;
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return null;
         } finally {
             try {
                 con.close();
@@ -84,7 +84,6 @@ public class AdminRepository implements IAdminRepository {
                 throwables.printStackTrace();
             }
         }
-        return null;
     }
 
     @Override
@@ -143,9 +142,9 @@ public class AdminRepository implements IAdminRepository {
 
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return false;
         }finally {
             try{
                 con.close();
@@ -153,7 +152,6 @@ public class AdminRepository implements IAdminRepository {
                 throwables.printStackTrace();
             }
         }
-        return false;
     }
 
     @Override
@@ -187,9 +185,9 @@ public class AdminRepository implements IAdminRepository {
 
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return false;
         } finally {
             try{
                 con.close();
@@ -197,7 +195,6 @@ public class AdminRepository implements IAdminRepository {
                 throwables.printStackTrace();
             }
         }
-        return false;
     }
 }
 

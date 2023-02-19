@@ -4,7 +4,7 @@ public class Member extends Person {
     private int apartment;
     private int room;
 
-    public Member(String name, String surname, String phone_number, String iin, int apartment, int room){
+    public Member(String name, String surname, String phone_number, String iin, int apartment, int room) {
         super(name, surname, phone_number, iin);
         this.apartment = apartment;
         this.room = room;
@@ -20,8 +20,8 @@ public class Member extends Person {
 
     @Override
     public String toString() {
-        return "Apartment: " + apartment + "\nroom: " + room +
-                "\nSurname: " + getSurname() + "\nName: " + getName() +
-                "\nPhone number: " + getPhone_number() + "\nIIN: " + getIin();
+        return "\nName: " + getName() + "\nSurname: " + getSurname() +
+                "\nPhone number: " + getPhone_number() + "\nIIN: " + getIin()
+            +"\nApartment: " + apartment + "\nroom: " + room;
     }
 }

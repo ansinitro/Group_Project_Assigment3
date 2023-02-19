@@ -10,5 +10,4 @@ public class Admin extends Person{
     public void changePassword(String password){
         this.password = password;
     }
-
 }
