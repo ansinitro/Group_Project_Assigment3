@@ -164,12 +164,12 @@ public class AdminRepository implements IAdminRepository {
             String sql = "SELECT apartment, room FROM member WHERE pk_iin = '" + iin + "'";
             ResultSet rs = stmt.executeQuery(sql);
 
-
             // assign apartment and room variables
-            while(rs.next()){
+            if(rs.next()){
                 apartment = rs.getInt("apartment");
                 room = rs.getInt("room");
-            }
+            }else
+                return false;
 
             // delete member
             sql = "delete from member where pk_iin = '" + iin + "'";

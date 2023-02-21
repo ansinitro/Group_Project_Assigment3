@@ -221,7 +221,7 @@ public class DormitoryApplication {
         if(adminController.eviction_by_iin(iin))
             System.out.println("Person evicted");
         else
-            System.err.println("Something went wrong!!!");
+            System.err.println("IIN is incorrect");
     }
 }
 
